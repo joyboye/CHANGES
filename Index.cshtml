@@ -1,0 +1,81 @@
+﻿@page
+@model NewApp1.Pages.Analytics.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Analytics</h1>
+
+
+@if (User.IsInRole("gneral manager"))
+{
+    <section>
+        <h1>this is for the general Manager only.</h1>
+    </section>
+} else if(User.IsInRole ("tech manager"))
+{
+    <Section>
+        <h1>this page is for the tech manager</h1>
+    </Section>
+}else if (User.IsInRole("program manager"))
+{
+    <section>
+        <h1>
+            Hi Program manager, you can go ahead and create new files.
+        </h1>
+    </section>
+}
+else
+{
+    <section>
+        <h1>You are not supposed to be on this page. Thanks </h1>
+    </section>
+}
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+        
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employees[0].FirstNAme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employees[0].LastNAme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employees[0].OpenPos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employees[0].ActionDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Employees) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstNAme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastNAme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OpenPos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActionDate)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.EID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.EID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.EID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
